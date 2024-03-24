@@ -1,5 +1,9 @@
 ﻿namespace WikiApplication.Models;
 
+/// <summary>
+/// Represents a piece of information for a data structure in the wiki application. - 6.1
+/// Implements the IComparable interface to allow for comparison between different Information objects for sorting.
+/// </summary>
 public class Information : IComparable<Information>
 {
 	private string name;
