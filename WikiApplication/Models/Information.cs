@@ -19,17 +19,45 @@ public class Information : IComparable<Information>
 		this.definition = definition;
 	}
 	
-	public string GetName() => name;
-	public void SetName(string value) => name = value;
+	public string GetName()
+	{
+		return name;
+	}
 
-	public string? GetCategory() => category;
-	public void SetCategory(string? value) => category = value;
+	public void SetName(string value)
+	{
+		name = value;
+	}
 
-	public string? GetStructure() => structure;
-	public void SetStructure(string? value) => structure = value;
+	public string? GetCategory()
+	{
+		return category;
+	}
 
-	public string? GetDefinition() => definition;
-	public void SetDefinition(string? value) => definition = value;
+	public void SetCategory(string? value)
+	{
+		category = value;
+	}
+
+	public string? GetStructure()
+	{
+		return structure;
+	}
+
+	public void SetStructure(string? value)
+	{
+		structure = value;
+	}
+
+	public string? GetDefinition()
+	{
+		return definition;
+	}
+
+	public void SetDefinition(string? value)
+	{
+		definition = value;
+	}
 
 	public int CompareTo(Information? other)
 	{
