@@ -1,4 +1,4 @@
-﻿namespace WikiApplication.Models;
+﻿namespace WikiApplication;
 
 /// <summary>
 /// Represents a piece of information for a data structure in the wiki application. - 6.1

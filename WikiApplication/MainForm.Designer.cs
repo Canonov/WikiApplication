@@ -316,7 +316,6 @@
 			nameLabelIcon.Size = new Size(32, 32);
 			nameLabelIcon.TabIndex = 8;
 			nameLabelIcon.TabStop = false;
-			nameLabelIcon.Click += iconPictureBox2_Click;
 			// 
 			// descriptionLabel
 			// 
@@ -390,7 +389,7 @@
 			// 
 			// categoryComboBox
 			// 
-			categoryComboBox.FlatStyle = FlatStyle.System;
+			categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 			categoryComboBox.Font = new Font("Segoe UI", 20F);
 			categoryComboBox.FormattingEnabled = true;
 			categoryComboBox.ItemHeight = 37;
@@ -562,6 +561,7 @@
 			MainMenuStrip = topMenuStrip;
 			Name = "MainForm";
 			Text = "Data Structure Wiki";
+			Load += OnFormLoad;
 			statusStrip1.ResumeLayout(false);
 			statusStrip1.PerformLayout();
 			topMenuStrip.ResumeLayout(false);

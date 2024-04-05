@@ -1,15 +1,17 @@
-namespace WikiApplication
+namespace WikiApplication;
+
+public partial class MainForm : Form
 {
-	public partial class MainForm : Form
+
+	private List<Information> wiki = new List<Information>(); // 6.2
+
+	public MainForm()
 	{
-		public MainForm()
-		{
-			InitializeComponent();
-		}
+		InitializeComponent();
+	}
 
-		private void iconPictureBox2_Click(object sender, EventArgs e)
-		{
+	private void OnFormLoad(object sender, EventArgs e)
+	{
 
-		}
 	}
 }
