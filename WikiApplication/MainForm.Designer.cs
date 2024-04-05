@@ -51,6 +51,7 @@
 			structureLabelIcon = new FontAwesome.Sharp.IconPictureBox();
 			categoryLabel = new Label();
 			categoryLabelIcon = new FontAwesome.Sharp.IconPictureBox();
+			editButton = new FontAwesome.Sharp.IconButton();
 			nameLabel = new Label();
 			nameLabelIcon = new FontAwesome.Sharp.IconPictureBox();
 			descriptionLabel = new Label();
@@ -66,7 +67,6 @@
 			loadButton = new FontAwesome.Sharp.IconButton();
 			saveButton = new FontAwesome.Sharp.IconButton();
 			clearButton = new FontAwesome.Sharp.IconButton();
-			editButton = new FontAwesome.Sharp.IconButton();
 			addNewButton = new FontAwesome.Sharp.IconButton();
 			statusStrip1.SuspendLayout();
 			topMenuStrip.SuspendLayout();
@@ -235,6 +235,7 @@
 			structureDataPanel.Controls.Add(structureLabelIcon);
 			structureDataPanel.Controls.Add(categoryLabel);
 			structureDataPanel.Controls.Add(categoryLabelIcon);
+			structureDataPanel.Controls.Add(editButton);
 			structureDataPanel.Controls.Add(nameLabel);
 			structureDataPanel.Controls.Add(nameLabelIcon);
 			structureDataPanel.Controls.Add(descriptionLabel);
@@ -294,6 +295,26 @@
 			categoryLabelIcon.TabIndex = 10;
 			categoryLabelIcon.TabStop = false;
 			// 
+			// editButton
+			// 
+			editButton.BackColor = SystemColors.Control;
+			editButton.Enabled = false;
+			editButton.FlatAppearance.BorderSize = 3;
+			editButton.FlatStyle = FlatStyle.Popup;
+			editButton.Font = new Font("Segoe UI", 15F);
+			editButton.IconChar = FontAwesome.Sharp.IconChar.PenToSquare;
+			editButton.IconColor = Color.Black;
+			editButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			editButton.IconSize = 30;
+			editButton.Location = new Point(300, 340);
+			editButton.Margin = new Padding(16);
+			editButton.Name = "editButton";
+			editButton.Size = new Size(183, 50);
+			editButton.TabIndex = 3;
+			editButton.Text = "Apply Changes";
+			editButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			editButton.UseVisualStyleBackColor = false;
+			// 
 			// nameLabel
 			// 
 			nameLabel.AutoSize = true;
@@ -348,7 +369,7 @@
 			structureRadioButtonsPanel.Controls.Add(nonLinearRadioButton);
 			structureRadioButtonsPanel.Location = new Point(300, 169);
 			structureRadioButtonsPanel.Name = "structureRadioButtonsPanel";
-			structureRadioButtonsPanel.Size = new Size(184, 221);
+			structureRadioButtonsPanel.Size = new Size(184, 167);
 			structureRadioButtonsPanel.TabIndex = 5;
 			// 
 			// linearRadioButton
@@ -417,7 +438,6 @@
 			structureEditButtonsPanel.Controls.Add(loadButton);
 			structureEditButtonsPanel.Controls.Add(saveButton);
 			structureEditButtonsPanel.Controls.Add(clearButton);
-			structureEditButtonsPanel.Controls.Add(editButton);
 			structureEditButtonsPanel.Controls.Add(addNewButton);
 			structureEditButtonsPanel.Location = new Point(14, 543);
 			structureEditButtonsPanel.Name = "structureEditButtonsPanel";
@@ -504,26 +524,6 @@
 			clearButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			clearButton.UseVisualStyleBackColor = false;
 			// 
-			// editButton
-			// 
-			editButton.BackColor = SystemColors.Control;
-			editButton.FlatAppearance.BorderSize = 3;
-			editButton.FlatStyle = FlatStyle.Popup;
-			editButton.Flip = FontAwesome.Sharp.FlipOrientation.Horizontal;
-			editButton.Font = new Font("Segoe UI", 20F);
-			editButton.IconChar = FontAwesome.Sharp.IconChar.Search;
-			editButton.IconColor = Color.Black;
-			editButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			editButton.IconSize = 30;
-			editButton.Location = new Point(171, 13);
-			editButton.Margin = new Padding(16);
-			editButton.Name = "editButton";
-			editButton.Size = new Size(155, 46);
-			editButton.TabIndex = 3;
-			editButton.Text = "Edit";
-			editButton.TextImageRelation = TextImageRelation.ImageBeforeText;
-			editButton.UseVisualStyleBackColor = false;
-			// 
 			// addNewButton
 			// 
 			addNewButton.BackColor = SystemColors.Control;
@@ -538,9 +538,10 @@
 			addNewButton.Location = new Point(12, 13);
 			addNewButton.Margin = new Padding(16);
 			addNewButton.Name = "addNewButton";
-			addNewButton.Size = new Size(155, 46);
+			addNewButton.Size = new Size(314, 46);
 			addNewButton.TabIndex = 2;
 			addNewButton.Text = "Add";
+			addNewButton.TextAlign = ContentAlignment.MiddleRight;
 			addNewButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			addNewButton.UseVisualStyleBackColor = false;
 			// 
