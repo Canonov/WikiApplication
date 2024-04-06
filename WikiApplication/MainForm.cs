@@ -29,15 +29,13 @@ public partial class MainForm : Form
 		// Read from the file and sanitize it.
 		var fileLines = File.ReadAllLines(CategoriesFileName)
 			.Select(line => line.Trim())
-			.Where(line => !string.IsNullOrWhiteSpace(line) && line == "None")
+			.Where(line => !string.IsNullOrWhiteSpace(line))
 			.Distinct()
 			.Order();
 
 		categories = fileLines.ToList();
-		categories.Add("None");
 
 		categoryComboBox.DataSource = categories;
-		categoryComboBox.SelectedIndex = categories.Count - 1; // Select N/A, since it will be the last
 	}
 
 	private void ClearDataPanel()
@@ -49,6 +47,6 @@ public partial class MainForm : Form
 		foreach (var radioButton in structureGroupBox.Controls.OfType<RadioButton>())
 			radioButton.Checked = false;
 
-		categoryComboBox.SelectedIndex = categories.Count - 1; // Select N/A Category
+		categoryComboBox.SelectedIndex = 1;
 	}
 }
