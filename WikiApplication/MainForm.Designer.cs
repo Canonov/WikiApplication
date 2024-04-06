@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			statusStrip1 = new StatusStrip();
-			toolStripStatusLabel1 = new ToolStripStatusLabel();
+			bottomStatusStrip = new StatusStrip();
+			feedbackStatusLabel = new ToolStripStatusLabel();
 			topMenuStrip = new MenuStrip();
 			fileToolStripMenuItem = new ToolStripMenuItem();
 			clearAllToolStripMenuItem = new ToolStripMenuItem();
@@ -68,7 +68,7 @@
 			saveButton = new FontAwesome.Sharp.IconButton();
 			clearButton = new FontAwesome.Sharp.IconButton();
 			addNewButton = new FontAwesome.Sharp.IconButton();
-			statusStrip1.SuspendLayout();
+			bottomStatusStrip.SuspendLayout();
 			topMenuStrip.SuspendLayout();
 			searchPanel.SuspendLayout();
 			structureDataPanel.SuspendLayout();
@@ -80,22 +80,22 @@
 			structureEditButtonsPanel.SuspendLayout();
 			SuspendLayout();
 			// 
-			// statusStrip1
+			// bottomStatusStrip
 			// 
-			statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-			statusStrip1.Location = new Point(0, 689);
-			statusStrip1.Name = "statusStrip1";
-			statusStrip1.Size = new Size(1002, 22);
-			statusStrip1.TabIndex = 0;
-			statusStrip1.Text = "statusStrip1";
+			bottomStatusStrip.Items.AddRange(new ToolStripItem[] { feedbackStatusLabel });
+			bottomStatusStrip.Location = new Point(0, 689);
+			bottomStatusStrip.Name = "bottomStatusStrip";
+			bottomStatusStrip.Size = new Size(1002, 22);
+			bottomStatusStrip.TabIndex = 0;
+			bottomStatusStrip.Text = "statusStrip1";
 			// 
-			// toolStripStatusLabel1
+			// feedbackStatusLabel
 			// 
-			toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			toolStripStatusLabel1.Size = new Size(987, 17);
-			toolStripStatusLabel1.Spring = true;
-			toolStripStatusLabel1.Text = "Status: Ok";
-			toolStripStatusLabel1.TextAlign = ContentAlignment.BottomLeft;
+			feedbackStatusLabel.Name = "feedbackStatusLabel";
+			feedbackStatusLabel.Size = new Size(987, 17);
+			feedbackStatusLabel.Spring = true;
+			feedbackStatusLabel.Text = "Status: Uninitialized";
+			feedbackStatusLabel.TextAlign = ContentAlignment.BottomLeft;
 			// 
 			// topMenuStrip
 			// 
@@ -121,6 +121,7 @@
 			clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
 			clearAllToolStripMenuItem.Size = new Size(154, 22);
 			clearAllToolStripMenuItem.Text = "Clear all Entries";
+			clearAllToolStripMenuItem.Click += OnClearEvent;
 			// 
 			// loadToolStripMenuItem
 			// 
@@ -264,6 +265,7 @@
 			// linearRadioButton
 			// 
 			linearRadioButton.AutoSize = true;
+			linearRadioButton.Checked = true;
 			linearRadioButton.Font = new Font("Segoe UI", 20F);
 			linearRadioButton.ForeColor = SystemColors.GrayText;
 			linearRadioButton.Location = new Point(10, 69);
@@ -283,7 +285,6 @@
 			nonLinearRadioButton.Name = "nonLinearRadioButton";
 			nonLinearRadioButton.Size = new Size(169, 41);
 			nonLinearRadioButton.TabIndex = 0;
-			nonLinearRadioButton.TabStop = true;
 			nonLinearRadioButton.Text = "Non-Linear";
 			nonLinearRadioButton.UseVisualStyleBackColor = true;
 			// 
@@ -523,6 +524,7 @@
 			clearButton.Text = "Clear";
 			clearButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			clearButton.UseVisualStyleBackColor = false;
+			clearButton.Click += OnClearEvent;
 			// 
 			// addNewButton
 			// 
@@ -555,7 +557,7 @@
 			Controls.Add(structureDataPanel);
 			Controls.Add(searchPanel);
 			Controls.Add(structuresListView);
-			Controls.Add(statusStrip1);
+			Controls.Add(bottomStatusStrip);
 			Controls.Add(topMenuStrip);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
@@ -563,8 +565,8 @@
 			Name = "MainForm";
 			Text = "Data Structure Wiki";
 			Load += OnFormLoad;
-			statusStrip1.ResumeLayout(false);
-			statusStrip1.PerformLayout();
+			bottomStatusStrip.ResumeLayout(false);
+			bottomStatusStrip.PerformLayout();
 			topMenuStrip.ResumeLayout(false);
 			topMenuStrip.PerformLayout();
 			searchPanel.ResumeLayout(false);
@@ -584,7 +586,7 @@
 
 		#endregion
 
-		private StatusStrip statusStrip1;
+		private StatusStrip bottomStatusStrip;
 		private MenuStrip topMenuStrip;
 		private ToolStripMenuItem fileToolStripMenuItem;
 		private ToolStripMenuItem clearAllToolStripMenuItem;
@@ -594,7 +596,7 @@
 		private ToolStripMenuItem saveAsToolStripMenuItem;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem exitToolStripMenuItem;
-		private ToolStripStatusLabel toolStripStatusLabel1;
+		private ToolStripStatusLabel feedbackStatusLabel;
 		private ListView structuresListView;
 		private ColumnHeader nameColumnHeader;
 		private ColumnHeader categoryColumnHeader;

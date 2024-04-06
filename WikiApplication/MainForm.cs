@@ -13,6 +13,7 @@ public partial class MainForm : Form
 	private void OnFormLoad(object sender, EventArgs e)
 	{
 		InitializeCategories(); // 6.4
+		SetFeedbackStatus("Ok!");
 	}
 
 	// 6.4 - Populates the combobox and categories list
@@ -38,15 +39,33 @@ public partial class MainForm : Form
 		categoryComboBox.DataSource = categories;
 	}
 
+	// 6.12 Method to clear the Textboxes, ComboBox, and Radio Buttons
 	private void ClearDataPanel()
 	{
 		nameTextBox.Clear();
 		descriptionTextBox.Clear();
 
 		// Clear selected structure
+		bool hasSetOne = false;
 		foreach (var radioButton in structureGroupBox.Controls.OfType<RadioButton>())
-			radioButton.Checked = false;
+		{
+			radioButton.Checked = !hasSetOne;
+			hasSetOne = true;
+		}
 
-		categoryComboBox.SelectedIndex = 1;
+		categoryComboBox.SelectedIndex = 0; // Set category to first
+	}
+
+	// 6.12 Event for both clear buttons
+	private void OnClearEvent(object sender, EventArgs e)
+	{
+		ClearDataPanel();
+		SetFeedbackStatus("Data Cleared");
+	}
+
+	private void SetFeedbackStatus(string status)
+	{
+		const string statusStripFormat = "Status: {0}";
+		feedbackStatusLabel.Text = string.Format(statusStripFormat, status);
 	}
 }
