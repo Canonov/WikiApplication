@@ -56,7 +56,7 @@ public partial class MainForm : Form
 		categoryComboBox.SelectedIndex = 0; // Set category to first
 	}
 
-	// 6.12 Event for both clear buttons
+	// 6.12, 6.13 Event for both clear button and the Name TextBox Double Click
 	private void OnClearEvent(object sender, EventArgs e)
 	{
 		ClearDataPanel();
