@@ -11,14 +11,14 @@ public class Information : IComparable<Information>
 	private string? structure;
 	private string? definition;
 
-	public Information(string name, string? category = null, string? structure = null, string? definition = null)
+	public Information(string name, string category, string? structure = null, string? definition = null)
 	{
 		this.name = name;
 		this.category = category;
 		this.structure = structure;
 		this.definition = definition;
 	}
-	
+
 	public string GetName()
 	{
 		return name;
@@ -65,8 +65,7 @@ public class Information : IComparable<Information>
 			return 1;
 		if (ReferenceEquals(this, other))
 			return 0;
-		
+
 		return string.Compare(name, other.name, StringComparison.Ordinal);
 	}
-
 }

@@ -298,7 +298,6 @@
 			// editButton
 			// 
 			editButton.BackColor = SystemColors.Control;
-			editButton.Enabled = false;
 			editButton.FlatAppearance.BorderSize = 3;
 			editButton.FlatStyle = FlatStyle.Popup;
 			editButton.Font = new Font("Segoe UI", 15F);
