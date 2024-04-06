@@ -68,4 +68,12 @@ public class Information : IComparable<Information>
 
 		return string.Compare(name, other.name, StringComparison.Ordinal);
 	}
+
+	/// <summary>
+	/// Convert the Information to a listview item with a name and category.
+	/// </summary>
+	public ListViewItem ToListViewItem()
+	{
+		return new ListViewItem(GetName()) { SubItems = { GetCategory() } };
+	}
 }
