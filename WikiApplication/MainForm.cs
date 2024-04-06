@@ -28,15 +28,24 @@ public partial class MainForm : Form
 		}
 
 		// Read from the file and sanitize it.
-		var fileLines = File.ReadAllLines(CategoriesFileName)
-			.Select(line => line.Trim())
-			.Where(line => !string.IsNullOrWhiteSpace(line))
-			.Distinct()
-			.Order();
+		try
+		{
+			var fileLines = File.ReadAllLines(CategoriesFileName)
+				.Select(line => line.Trim())
+				.Where(line => !string.IsNullOrWhiteSpace(line))
+				.Distinct()
+				.Order();
 
-		categories = fileLines.ToList();
+			categories = fileLines.ToList();
 
-		categoryComboBox.DataSource = categories;
+			categoryComboBox.DataSource = categories;
+		}
+		catch (IOException ex)
+		{
+			MessageBoxUtils.ShowFatalError(
+				$"An Unknown IO Exception occured while reading {CategoriesFileName} in {Application.ExecutablePath}\nMore information below:\n{ex}");
+			Application.Exit();
+		}
 	}
 
 	// 6.12 Method to clear the Textboxes, ComboBox, and Radio Buttons
