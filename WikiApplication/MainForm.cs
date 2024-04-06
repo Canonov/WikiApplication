@@ -13,6 +13,7 @@ public partial class MainForm : Form
 	private void OnFormLoad(object sender, EventArgs e)
 	{
 		InitializeCategories(); // 6.4
+		SortAndDisplayWikiItems();
 		SetFeedbackStatus("Ok!");
 	}
 
@@ -37,7 +38,6 @@ public partial class MainForm : Form
 				.Order();
 
 			categories = fileLines.ToList();
-
 			categoryComboBox.DataSource = categories;
 		}
 		catch (IOException ex)
@@ -46,6 +46,22 @@ public partial class MainForm : Form
 				$"An Unknown IO Exception occured while reading {CategoriesFileName} in {Application.ExecutablePath}\nMore information below:\n{ex}");
 			Application.Exit();
 		}
+	}
+
+	// 6.9 sort and then display the Name and Category from the wiki information in the list.
+	private void SortAndDisplayWikiItems()
+	{
+		structuresListView.Items.Clear();
+		if (wiki.Count == 0)
+			return;
+
+		// Get a sorted array of ListViewItems from the Wiki List
+		var wikiItems = wiki.Order() // Sort them
+			.Select(x => x.ToListViewItem()) // Convert each to a ListViewItem
+			.ToArray(); 
+
+		structuresListView.Items.AddRange(wikiItems);
+		structuresListView.Refresh();
 	}
 
 	// 6.12 Method to clear the Textboxes, ComboBox, and Radio Buttons
