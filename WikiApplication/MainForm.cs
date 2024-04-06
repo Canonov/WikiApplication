@@ -74,7 +74,6 @@ public partial class MainForm : Form
 
 	private void SetFeedbackStatus(string status)
 	{
-		const string statusStripFormat = "Status: {0}";
-		feedbackStatusLabel.Text = string.Format(statusStripFormat, status);
+		feedbackStatusLabel.Text = $@"Status: {status}";
 	}
 }
