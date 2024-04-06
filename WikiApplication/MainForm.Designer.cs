@@ -47,6 +47,9 @@
 			searchTextBox = new TextBox();
 			searchButton = new FontAwesome.Sharp.IconButton();
 			structureDataPanel = new Panel();
+			structureGroupBox = new GroupBox();
+			linearRadioButton = new RadioButton();
+			nonLinearRadioButton = new RadioButton();
 			structureLabel = new Label();
 			structureLabelIcon = new FontAwesome.Sharp.IconPictureBox();
 			categoryLabel = new Label();
@@ -56,9 +59,6 @@
 			nameLabelIcon = new FontAwesome.Sharp.IconPictureBox();
 			descriptionLabel = new Label();
 			descriptionLabelIcon = new FontAwesome.Sharp.IconPictureBox();
-			structureRadioButtonsPanel = new Panel();
-			linearRadioButton = new RadioButton();
-			nonLinearRadioButton = new RadioButton();
 			descriptionTextBox = new TextBox();
 			categoryComboBox = new ComboBox();
 			nameTextBox = new TextBox();
@@ -72,11 +72,11 @@
 			topMenuStrip.SuspendLayout();
 			searchPanel.SuspendLayout();
 			structureDataPanel.SuspendLayout();
+			structureGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)structureLabelIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)categoryLabelIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)nameLabelIcon).BeginInit();
 			((System.ComponentModel.ISupportInitialize)descriptionLabelIcon).BeginInit();
-			structureRadioButtonsPanel.SuspendLayout();
 			structureEditButtonsPanel.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -231,6 +231,7 @@
 			// 
 			structureDataPanel.BackColor = SystemColors.ControlLight;
 			structureDataPanel.BorderStyle = BorderStyle.Fixed3D;
+			structureDataPanel.Controls.Add(structureGroupBox);
 			structureDataPanel.Controls.Add(structureLabel);
 			structureDataPanel.Controls.Add(structureLabelIcon);
 			structureDataPanel.Controls.Add(categoryLabel);
@@ -240,7 +241,6 @@
 			structureDataPanel.Controls.Add(nameLabelIcon);
 			structureDataPanel.Controls.Add(descriptionLabel);
 			structureDataPanel.Controls.Add(descriptionLabelIcon);
-			structureDataPanel.Controls.Add(structureRadioButtonsPanel);
 			structureDataPanel.Controls.Add(descriptionTextBox);
 			structureDataPanel.Controls.Add(categoryComboBox);
 			structureDataPanel.Controls.Add(nameTextBox);
@@ -248,6 +248,44 @@
 			structureDataPanel.Name = "structureDataPanel";
 			structureDataPanel.Size = new Size(498, 406);
 			structureDataPanel.TabIndex = 5;
+			// 
+			// structureGroupBox
+			// 
+			structureGroupBox.BackColor = SystemColors.Window;
+			structureGroupBox.Controls.Add(linearRadioButton);
+			structureGroupBox.Controls.Add(nonLinearRadioButton);
+			structureGroupBox.FlatStyle = FlatStyle.System;
+			structureGroupBox.Location = new Point(300, 169);
+			structureGroupBox.Name = "structureGroupBox";
+			structureGroupBox.Size = new Size(185, 167);
+			structureGroupBox.TabIndex = 14;
+			structureGroupBox.TabStop = false;
+			// 
+			// linearRadioButton
+			// 
+			linearRadioButton.AutoSize = true;
+			linearRadioButton.Font = new Font("Segoe UI", 20F);
+			linearRadioButton.ForeColor = SystemColors.GrayText;
+			linearRadioButton.Location = new Point(10, 69);
+			linearRadioButton.Name = "linearRadioButton";
+			linearRadioButton.Size = new Size(107, 41);
+			linearRadioButton.TabIndex = 1;
+			linearRadioButton.TabStop = true;
+			linearRadioButton.Text = "Linear";
+			linearRadioButton.UseVisualStyleBackColor = true;
+			// 
+			// nonLinearRadioButton
+			// 
+			nonLinearRadioButton.AutoSize = true;
+			nonLinearRadioButton.Font = new Font("Segoe UI", 20F);
+			nonLinearRadioButton.ForeColor = SystemColors.GrayText;
+			nonLinearRadioButton.Location = new Point(10, 22);
+			nonLinearRadioButton.Name = "nonLinearRadioButton";
+			nonLinearRadioButton.Size = new Size(169, 41);
+			nonLinearRadioButton.TabIndex = 0;
+			nonLinearRadioButton.TabStop = true;
+			nonLinearRadioButton.Text = "Non-Linear";
+			nonLinearRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// structureLabel
 			// 
@@ -359,43 +397,6 @@
 			descriptionLabelIcon.Size = new Size(32, 32);
 			descriptionLabelIcon.TabIndex = 6;
 			descriptionLabelIcon.TabStop = false;
-			// 
-			// structureRadioButtonsPanel
-			// 
-			structureRadioButtonsPanel.BackColor = SystemColors.Window;
-			structureRadioButtonsPanel.BorderStyle = BorderStyle.FixedSingle;
-			structureRadioButtonsPanel.Controls.Add(linearRadioButton);
-			structureRadioButtonsPanel.Controls.Add(nonLinearRadioButton);
-			structureRadioButtonsPanel.Location = new Point(300, 169);
-			structureRadioButtonsPanel.Name = "structureRadioButtonsPanel";
-			structureRadioButtonsPanel.Size = new Size(184, 167);
-			structureRadioButtonsPanel.TabIndex = 5;
-			// 
-			// linearRadioButton
-			// 
-			linearRadioButton.AutoSize = true;
-			linearRadioButton.Font = new Font("Segoe UI", 20F);
-			linearRadioButton.ForeColor = SystemColors.GrayText;
-			linearRadioButton.Location = new Point(7, 60);
-			linearRadioButton.Name = "linearRadioButton";
-			linearRadioButton.Size = new Size(107, 41);
-			linearRadioButton.TabIndex = 1;
-			linearRadioButton.TabStop = true;
-			linearRadioButton.Text = "Linear";
-			linearRadioButton.UseVisualStyleBackColor = true;
-			// 
-			// nonLinearRadioButton
-			// 
-			nonLinearRadioButton.AutoSize = true;
-			nonLinearRadioButton.Font = new Font("Segoe UI", 20F);
-			nonLinearRadioButton.ForeColor = SystemColors.GrayText;
-			nonLinearRadioButton.Location = new Point(7, 13);
-			nonLinearRadioButton.Name = "nonLinearRadioButton";
-			nonLinearRadioButton.Size = new Size(169, 41);
-			nonLinearRadioButton.TabIndex = 0;
-			nonLinearRadioButton.TabStop = true;
-			nonLinearRadioButton.Text = "Non-Linear";
-			nonLinearRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// descriptionTextBox
 			// 
@@ -570,12 +571,12 @@
 			searchPanel.PerformLayout();
 			structureDataPanel.ResumeLayout(false);
 			structureDataPanel.PerformLayout();
+			structureGroupBox.ResumeLayout(false);
+			structureGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)structureLabelIcon).EndInit();
 			((System.ComponentModel.ISupportInitialize)categoryLabelIcon).EndInit();
 			((System.ComponentModel.ISupportInitialize)nameLabelIcon).EndInit();
 			((System.ComponentModel.ISupportInitialize)descriptionLabelIcon).EndInit();
-			structureRadioButtonsPanel.ResumeLayout(false);
-			structureRadioButtonsPanel.PerformLayout();
 			structureEditButtonsPanel.ResumeLayout(false);
 			ResumeLayout(false);
 			PerformLayout();
@@ -610,7 +611,6 @@
 		private FontAwesome.Sharp.IconButton addNewButton;
 		private TextBox nameTextBox;
 		private ComboBox categoryComboBox;
-		private Panel structureRadioButtonsPanel;
 		private RadioButton linearRadioButton;
 		private RadioButton nonLinearRadioButton;
 		private TextBox descriptionTextBox;
@@ -622,5 +622,6 @@
 		private FontAwesome.Sharp.IconPictureBox structureLabelIcon;
 		private Label categoryLabel;
 		private FontAwesome.Sharp.IconPictureBox categoryLabelIcon;
+		private GroupBox structureGroupBox;
 	}
 }

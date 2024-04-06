@@ -46,7 +46,7 @@ public partial class MainForm : Form
 		descriptionTextBox.Clear();
 
 		// Clear selected structure
-		foreach (var radioButton in structureDataPanel.Controls.OfType<RadioButton>())
+		foreach (var radioButton in structureGroupBox.Controls.OfType<RadioButton>())
 			radioButton.Checked = false;
 
 		categoryComboBox.SelectedIndex = categories.Count - 1; // Select N/A Category
