@@ -284,18 +284,6 @@ public partial class MainForm : Form
 		SetFeedbackStatus("List Cleared");
 	}
 
-	private void SetFeedbackStatus(string status, FeedbackLevel level = FeedbackLevel.Notice)
-	{
-		level.GetSound()?.Play();
-		feedbackStatusLabel.Text = $@"Status: {status}";
-	}
-
-	// 6.5 method to check if a name is a duplicate
-	private bool IsValidName(string name)
-	{
-		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
-	}
-
 	// 6.10 Event to perform a binary search for the data structure name
 	private void OnSearchEvent(object sender, EventArgs e)
 	{
@@ -344,6 +332,19 @@ public partial class MainForm : Form
 	{
 		if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
 			e.Handled = true;
+	}
+
+	private void SetFeedbackStatus(string status, FeedbackLevel level = FeedbackLevel.Notice)
+	{
+		level.GetSound()?.Play();
+		feedbackStatusLabel.ForeColor = level.GetColor();
+		feedbackStatusLabel.Text = $@"Status: {status}";
+	}
+
+	// 6.5 method to check if a name is a duplicate
+	private bool IsValidName(string name)
+	{
+		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
 	}
 
 }
