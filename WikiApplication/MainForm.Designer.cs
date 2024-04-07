@@ -119,7 +119,7 @@
 			clearAllToolStripMenuItem.Image = (Image)resources.GetObject("clearAllToolStripMenuItem.Image");
 			clearAllToolStripMenuItem.ImageTransparentColor = Color.Magenta;
 			clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-			clearAllToolStripMenuItem.Size = new Size(180, 22);
+			clearAllToolStripMenuItem.Size = new Size(154, 22);
 			clearAllToolStripMenuItem.Text = "Clear all Entries";
 			// 
 			// loadToolStripMenuItem
@@ -127,13 +127,13 @@
 			loadToolStripMenuItem.Image = (Image)resources.GetObject("loadToolStripMenuItem.Image");
 			loadToolStripMenuItem.ImageTransparentColor = Color.Magenta;
 			loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-			loadToolStripMenuItem.Size = new Size(180, 22);
+			loadToolStripMenuItem.Size = new Size(154, 22);
 			loadToolStripMenuItem.Text = "Load from file";
 			// 
 			// toolStripSeparator
 			// 
 			toolStripSeparator.Name = "toolStripSeparator";
-			toolStripSeparator.Size = new Size(177, 6);
+			toolStripSeparator.Size = new Size(151, 6);
 			// 
 			// saveFileToolStripMenuItem
 			// 
@@ -141,24 +141,24 @@
 			saveFileToolStripMenuItem.ImageTransparentColor = Color.Magenta;
 			saveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
 			saveFileToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-			saveFileToolStripMenuItem.Size = new Size(180, 22);
+			saveFileToolStripMenuItem.Size = new Size(154, 22);
 			saveFileToolStripMenuItem.Text = "&Save";
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			saveAsToolStripMenuItem.Size = new Size(180, 22);
+			saveAsToolStripMenuItem.Size = new Size(154, 22);
 			saveAsToolStripMenuItem.Text = "Save &As";
 			// 
 			// toolStripSeparator1
 			// 
 			toolStripSeparator1.Name = "toolStripSeparator1";
-			toolStripSeparator1.Size = new Size(177, 6);
+			toolStripSeparator1.Size = new Size(151, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			exitToolStripMenuItem.Size = new Size(180, 22);
+			exitToolStripMenuItem.Size = new Size(154, 22);
 			exitToolStripMenuItem.Text = "E&xit";
 			// 
 			// structuresListView
@@ -169,11 +169,13 @@
 			structuresListView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 			structuresListView.Location = new Point(523, 32);
 			structuresListView.Margin = new Padding(8);
+			structuresListView.MultiSelect = false;
 			structuresListView.Name = "structuresListView";
 			structuresListView.Size = new Size(464, 643);
 			structuresListView.TabIndex = 3;
 			structuresListView.UseCompatibleStateImageBehavior = false;
 			structuresListView.View = View.Details;
+			structuresListView.SelectedIndexChanged += OnWikiItemSelectionChanged;
 			// 
 			// nameColumnHeader
 			// 

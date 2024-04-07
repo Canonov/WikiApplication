@@ -1,3 +1,5 @@
+using System.Media;
+
 namespace WikiApplication;
 
 public partial class MainForm : Form
@@ -58,7 +60,7 @@ public partial class MainForm : Form
 		// Get a sorted array of ListViewItems from the Wiki List
 		var wikiItems = wiki.Order() // Sort them
 			.Select(x => x.ToListViewItem()) // Convert each to a ListViewItem
-			.ToArray(); 
+			.ToArray();
 
 		structuresListView.Items.AddRange(wikiItems);
 		structuresListView.Refresh();
@@ -86,6 +88,37 @@ public partial class MainForm : Form
 		radioButton.Checked = true;
 	}
 
+	// 6.11 Copy information to the data panel from an information
+	private void SetDataPanel(Information info)
+	{
+		nameTextBox.Text = info.GetName();
+		descriptionTextBox.Text = info.GetDefinition();
+
+		// Get the category item equal to the info 
+		var categoryItem = categoryComboBox.Items.OfType<string>()
+			.FirstOrDefault(item => item.Equals(info.GetCategory(), StringComparison.OrdinalIgnoreCase));
+
+		categoryComboBox.SelectedItem = categoryItem;
+
+		// Select the structure
+		var radioButtons = structureGroupBox.Controls.OfType<RadioButton>().ToList();
+
+		for (int i = 0; i < radioButtons.Count; i++)
+		{
+			if (radioButtons.ElementAt(i).Text == info.GetStructure())
+			{
+				SetStructureType(i);
+				break;
+			}
+			if (i == radioButtons.Count - 1) // No matching radiobutton was found, use a default
+			{
+				SystemSounds.Asterisk.Play();
+				SetFeedbackStatus($"Unable to find structure {info.GetStructure()}");
+				SetStructureType(0);
+			}
+		}
+	}
+
 	// 6.12 Method to clear the Textboxes, ComboBox, and Radio Buttons
 	private void ClearDataPanel()
 	{
@@ -101,6 +134,19 @@ public partial class MainForm : Form
 		}
 
 		categoryComboBox.SelectedIndex = 0; // Set category to first
+	}
+
+	// 6.11 When the selected item is changed, update the textboxes 
+	private void OnWikiItemSelectionChanged(object sender, EventArgs e)
+	{
+		if (structuresListView.SelectedItems.Count == 0)
+		{
+			ClearDataPanel();
+			return;
+		}
+
+		int index = structuresListView.SelectedItems[0].Index;
+		SetDataPanel(wiki[index]);
 	}
 
 	// 6.12, 6.13 Event for both clear button and the Name TextBox Double Click
