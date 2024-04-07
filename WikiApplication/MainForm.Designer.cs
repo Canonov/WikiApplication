@@ -466,6 +466,7 @@
 			deleteItemButton.Text = "Delete";
 			deleteItemButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			deleteItemButton.UseVisualStyleBackColor = false;
+			deleteItemButton.Click += OnDeleteEvent;
 			// 
 			// loadButton
 			// 

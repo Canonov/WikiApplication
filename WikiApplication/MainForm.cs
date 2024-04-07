@@ -15,7 +15,7 @@ public partial class MainForm : Form
 	private void OnFormLoad(object sender, EventArgs e)
 	{
 		InitializeCategories(); // 6.4
-		SortAndDisplayWikiItems();
+		UpdateStructureListView();
 		SetFeedbackStatus("Ok!");
 	}
 
@@ -51,16 +51,17 @@ public partial class MainForm : Form
 	}
 
 	// 6.9 sort and then display the Name and Category from the wiki information in the list.
-	private void SortAndDisplayWikiItems()
+	private void UpdateStructureListView(bool skipSort = false)
 	{
 		structuresListView.Items.Clear();
 		if (wiki.Count == 0)
 			return;
 
+		if (!skipSort)
+			wiki.Sort();
+
 		// Get a sorted array of ListViewItems from the Wiki List
-		var wikiItems = wiki.Order() // Sort them
-			.Select(x => x.ToListViewItem()) // Convert each to a ListViewItem
-			.ToArray();
+		var wikiItems = wiki.Select(x => x.ToListViewItem()).ToArray(); // Convert each to a ListViewItem
 
 		structuresListView.Items.AddRange(wikiItems);
 		structuresListView.Refresh();
@@ -75,7 +76,17 @@ public partial class MainForm : Form
 				return radioButton.Text;
 		}
 
-		return null; 
+		return null;
+	}
+
+	// Get the currently selected entry, or null if nothing is selected.
+	private Information? GetSelectedInformation()
+	{
+		if (structuresListView.SelectedItems.Count == 0)
+			return null;
+
+		int index = structuresListView.SelectedItems[0].Index;
+		return wiki[index];
 	}
 
 	// 6.6 Method to set the selected structure type based on an index
@@ -154,6 +165,29 @@ public partial class MainForm : Form
 	{
 		ClearDataPanel();
 		SetFeedbackStatus("Data Cleared");
+	}
+
+	// 6.7 Event to delete the currently selected item.
+	private void OnDeleteEvent(object sender, EventArgs e)
+	{
+		var info = GetSelectedInformation();
+		if (info == null)
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("No selection found to delete");
+			return;
+		}
+
+		if (MessageBoxUtils.PromptYesNo($"Are you sure you would like to delete {info.GetName()}?") != DialogResult.Yes)
+		{
+			return;
+		}
+
+		wiki.Remove(info);
+
+		ClearDataPanel();
+		UpdateStructureListView(skipSort: true);
+		SetFeedbackStatus($"{info.GetName()} has been deleted.");
 	}
 
 	private void SetFeedbackStatus(string status)
