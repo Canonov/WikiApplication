@@ -193,7 +193,7 @@ public partial class MainForm : Form
 	// 6.3 Event to call the add method
 	private void OnAddEvent(object sender, EventArgs e)
 	{
-		string name = nameTextBox.Text;
+		string name = nameTextBox.Text.Trim();
 		string category = categoryComboBox.Text;
 		string definition = descriptionTextBox.Text;
 		string? structure = GetStructureType();
@@ -229,7 +229,7 @@ public partial class MainForm : Form
 		feedbackStatusLabel.Text = $@"Status: {status}";
 	}
 
-	// 6.8 method to check if a name is a duplicate
+	// 6.5 method to check if a name is a duplicate
 	private bool IsValidName(string name)
 	{
 		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
