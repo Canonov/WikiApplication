@@ -549,6 +549,7 @@
 			addNewButton.TextAlign = ContentAlignment.MiddleRight;
 			addNewButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			addNewButton.UseVisualStyleBackColor = false;
+			addNewButton.Click += OnAddEvent;
 			// 
 			// MainForm
 			// 

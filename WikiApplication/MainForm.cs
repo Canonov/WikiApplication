@@ -190,6 +190,40 @@ public partial class MainForm : Form
 		SetFeedbackStatus($"{info.GetName()} has been deleted.");
 	}
 
+	// 6.3 Event to call the add method
+	private void OnAddEvent(object sender, EventArgs e)
+	{
+		string name = nameTextBox.Text;
+		string category = categoryComboBox.Text;
+		string definition = descriptionTextBox.Text;
+		string? structure = GetStructureType();
+
+		// Check if Name, Structure, and Category are invalid
+		if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(structure) ||
+		    string.IsNullOrWhiteSpace(category))
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("Invalid input. Please provide a valid Name, Structure, and Category.");
+			return;
+		}
+
+		if (!IsValidName(name))
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("Input already exists in list!");
+			return;
+		}
+
+		// Add the new Information to the wiki list
+		wiki.Add(new Information(name, category, structure, definition));
+
+		// Clear the data panel and update the structure list view
+		ClearDataPanel();
+		UpdateStructureListView();
+
+		SetFeedbackStatus($"{name} has been added.");
+	}
+
 	private void SetFeedbackStatus(string status)
 	{
 		feedbackStatusLabel.Text = $@"Status: {status}";
@@ -200,6 +234,4 @@ public partial class MainForm : Form
 	{
 		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
 	}
-
-
 }
