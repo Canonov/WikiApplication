@@ -208,6 +208,7 @@
 			searchTextBox.PlaceholderText = "Enter a query...";
 			searchTextBox.Size = new Size(283, 46);
 			searchTextBox.TabIndex = 1;
+			searchTextBox.KeyPress += OnSearchTextBoxKeyPress;
 			// 
 			// searchButton
 			// 
@@ -228,6 +229,7 @@
 			searchButton.Text = "Search";
 			searchButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			searchButton.UseVisualStyleBackColor = false;
+			searchButton.Click += OnSearchEvent;
 			// 
 			// structureDataPanel
 			// 

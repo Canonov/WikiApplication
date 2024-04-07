@@ -273,4 +273,47 @@ public partial class MainForm : Form
 	{
 		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
 	}
+
+	// 6.10 Event to perform a binary search for the data structure name
+	private void OnSearchEvent(object sender, EventArgs e)
+	{
+		var query = searchTextBox.Text;
+
+		if (string.IsNullOrEmpty(query))
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("Please enter a search query");
+			return;
+		}
+
+		// Perform binary search on the wiki list
+		int index = wiki.BinarySearch(new Information(query, "", ""));
+
+		if (index >= 0)
+		{
+			// Found the record, populate the input controls and highlight the name in the ListView
+			structuresListView.SelectedIndices.Clear();
+			structuresListView.Items[index].Selected = true;
+			structuresListView.Items[index].EnsureVisible();
+
+			SetFeedbackStatus("Record found!");
+		}
+		else
+		{
+			MessageBoxUtils.ShowWarning($"Search Query {query} was not found!"); // Record not found
+		}
+
+		// Clear the search input TextBox
+		searchTextBox.Clear();
+	}
+
+	// If enter is pressed in the search box, redirect it to the search event
+	private void OnSearchTextBoxKeyPress(object sender, KeyPressEventArgs e)
+	{
+		if (e.KeyChar == (char)Keys.Enter)
+		{
+			e.Handled = true;
+			OnSearchEvent(sender, e);
+		}
+	}
 }
