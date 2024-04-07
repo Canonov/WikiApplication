@@ -194,4 +194,12 @@ public partial class MainForm : Form
 	{
 		feedbackStatusLabel.Text = $@"Status: {status}";
 	}
+
+	// 6.8 method to check if a name is a duplicate
+	private bool IsValidName(string name)
+	{
+		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
+	}
+
+
 }
