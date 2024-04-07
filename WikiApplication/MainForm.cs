@@ -64,6 +64,28 @@ public partial class MainForm : Form
 		structuresListView.Refresh();
 	}
 
+	// 6.6 Method to get the selected structure type (Linear or Non-Linear)
+	private string? GetStructureType()
+	{
+		foreach (var radioButton in structureGroupBox.Controls.OfType<RadioButton>())
+		{
+			if (radioButton.Checked)
+				return radioButton.Text;
+		}
+
+		return null; 
+	}
+
+	// 6.6 Method to set the selected structure type based on an index
+	private void SetStructureType(int index)
+	{
+		if (index < 0 || index >= structureGroupBox.Controls.OfType<RadioButton>().Count())
+			throw new ArgumentOutOfRangeException(nameof(index), @"Index is out of range of available radio buttons.");
+
+		var radioButton = structureGroupBox.Controls.OfType<RadioButton>().ElementAt(index);
+		radioButton.Checked = true;
+	}
+
 	// 6.12 Method to clear the Textboxes, ComboBox, and Radio Buttons
 	private void ClearDataPanel()
 	{
