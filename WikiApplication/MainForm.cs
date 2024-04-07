@@ -331,4 +331,11 @@ public partial class MainForm : Form
 			OnSearchEvent(sender, e);
 		}
 	}
+
+	// Only allow regular characters.
+	private void OnNameTextBoxKeyPress(object sender, KeyPressEventArgs e)
+	{
+		if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar)) 
+			e.Handled = true;
+	}
 }

@@ -434,6 +434,7 @@
 			nameTextBox.PlaceholderText = "Data Structure";
 			nameTextBox.Size = new Size(283, 46);
 			nameTextBox.TabIndex = 2;
+			nameTextBox.KeyPress += OnNameTextBoxKeyPress;
 			nameTextBox.MouseDoubleClick += OnClearEvent;
 			// 
 			// structureEditButtonsPanel
