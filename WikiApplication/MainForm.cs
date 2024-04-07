@@ -278,6 +278,14 @@ public partial class MainForm : Form
 		SetFeedbackStatus($"{name} has been updated.");
 	}
 
+	private void OnClearAllEvent(object sender, EventArgs e)
+	{
+		if (MessageBoxUtils.PromptYesNo("Are you sure you want to delete all entries?\n This is not reversible!") != DialogResult.Yes)
+			return;
+
+		wiki.Clear();
+	}
+
 	private void SetFeedbackStatus(string status)
 	{
 		feedbackStatusLabel.Text = $@"Status: {status}";
@@ -335,7 +343,8 @@ public partial class MainForm : Form
 	// Only allow regular characters.
 	private void OnNameTextBoxKeyPress(object sender, KeyPressEventArgs e)
 	{
-		if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar)) 
+		if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
 			e.Handled = true;
 	}
+
 }
