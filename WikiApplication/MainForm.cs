@@ -138,8 +138,7 @@ public partial class MainForm : Form
 			}
 			if (i == radioButtons.Count - 1) // No matching radiobutton was found, use a default
 			{
-				SystemSounds.Asterisk.Play();
-				SetFeedbackStatus($"Unable to find structure {info.GetStructure()}");
+				SetFeedbackStatus($"Unable to find structure {info.GetStructure()}", FeedbackLevel.Warning);
 				SetStructureType(0);
 			}
 		}
@@ -188,8 +187,7 @@ public partial class MainForm : Form
 		var info = GetSelectedInformation();
 		if (info == null)
 		{
-			SystemSounds.Asterisk.Play();
-			SetFeedbackStatus("No selection found to delete");
+			SetFeedbackStatus("No selection found to delete", FeedbackLevel.Warning);
 			return;
 		}
 
@@ -217,8 +215,7 @@ public partial class MainForm : Form
 
 		if (!IsValidName(name) && !editNameUnchanged)
 		{
-			SystemSounds.Asterisk.Play();
-			SetFeedbackStatus("Input already exists in list!");
+			SetFeedbackStatus("Input already exists in list!", FeedbackLevel.Warning);
 			return false;
 		}
 
@@ -253,8 +250,7 @@ public partial class MainForm : Form
 		var info = GetSelectedInformation();
 		if (info == null)
 		{
-			SystemSounds.Asterisk.Play();
-			SetFeedbackStatus("No information selected to edit, did you mean to Add it instead?");
+			SetFeedbackStatus("No information selected to edit, did you mean to Add it instead?", FeedbackLevel.Warning);
 			return;
 		}
 
@@ -288,8 +284,9 @@ public partial class MainForm : Form
 		SetFeedbackStatus("List Cleared");
 	}
 
-	private void SetFeedbackStatus(string status)
+	private void SetFeedbackStatus(string status, FeedbackLevel level = FeedbackLevel.Notice)
 	{
+		level.GetSound()?.Play();
 		feedbackStatusLabel.Text = $@"Status: {status}";
 	}
 
