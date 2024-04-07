@@ -15,7 +15,7 @@ public partial class MainForm : Form
 	private void OnFormLoad(object sender, EventArgs e)
 	{
 		InitializeCategories(); // 6.4
-		SortAndDisplayWikiItems();
+		UpdateStructureListView();
 		SetFeedbackStatus("Ok!");
 	}
 
@@ -51,16 +51,17 @@ public partial class MainForm : Form
 	}
 
 	// 6.9 sort and then display the Name and Category from the wiki information in the list.
-	private void SortAndDisplayWikiItems()
+	private void UpdateStructureListView(bool skipSort = false)
 	{
 		structuresListView.Items.Clear();
 		if (wiki.Count == 0)
 			return;
 
+		if (!skipSort)
+			wiki.Sort();
+
 		// Get a sorted array of ListViewItems from the Wiki List
-		var wikiItems = wiki.Order() // Sort them
-			.Select(x => x.ToListViewItem()) // Convert each to a ListViewItem
-			.ToArray();
+		var wikiItems = wiki.Select(x => x.ToListViewItem()).ToArray(); // Convert each to a ListViewItem
 
 		structuresListView.Items.AddRange(wikiItems);
 		structuresListView.Refresh();
@@ -75,7 +76,17 @@ public partial class MainForm : Form
 				return radioButton.Text;
 		}
 
-		return null; 
+		return null;
+	}
+
+	// Get the currently selected entry, or null if nothing is selected.
+	private Information? GetSelectedInformation()
+	{
+		if (structuresListView.SelectedItems.Count == 0)
+			return null;
+
+		int index = structuresListView.SelectedItems[0].Index;
+		return wiki[index];
 	}
 
 	// 6.6 Method to set the selected structure type based on an index
@@ -156,8 +167,110 @@ public partial class MainForm : Form
 		SetFeedbackStatus("Data Cleared");
 	}
 
+	// 6.7 Event to delete the currently selected item.
+	private void OnDeleteEvent(object sender, EventArgs e)
+	{
+		var info = GetSelectedInformation();
+		if (info == null)
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("No selection found to delete");
+			return;
+		}
+
+		if (MessageBoxUtils.PromptYesNo($"Are you sure you would like to delete {info.GetName()}?") != DialogResult.Yes)
+		{
+			return;
+		}
+
+		wiki.Remove(info);
+
+		ClearDataPanel();
+		UpdateStructureListView(skipSort: true);
+		SetFeedbackStatus($"{info.GetName()} has been deleted.");
+	}
+
+	// Method to validate the input fields for editing and adding
+	private bool ValidateInput(string name, string? structure, string category, bool editNameUnchanged = false)
+	{
+		if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(structure) ||
+			string.IsNullOrWhiteSpace(category))
+		{
+			MessageBoxUtils.ShowWarning("Invalid input. Please provide a valid Name, Structure, and Category.");
+			return false;
+		}
+
+		if (!IsValidName(name) && !editNameUnchanged)
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("Input already exists in list!");
+			return false;
+		}
+
+		return true;
+	}
+
+	// 6.3 Event to call the add method
+	private void OnAddEvent(object sender, EventArgs e)
+	{
+		string name = nameTextBox.Text.Trim();
+		string category = categoryComboBox.Text;
+		string definition = descriptionTextBox.Text;
+		string? structure = GetStructureType();
+
+		// Validate the input fields
+		if (!ValidateInput(name, structure, category))
+			return;
+
+		// Add the new Information to the wiki list
+		wiki.Add(new Information(name, category, structure!, definition));
+
+		// Clear the data panel and update the structure list view
+		ClearDataPanel();
+		UpdateStructureListView();
+
+		SetFeedbackStatus($"{name} has been added.");
+	}
+
+	// 6.8 Event for apply changes button, updates the info in the list
+	private void OnEditEvent(object sender, EventArgs e)
+	{
+		var info = GetSelectedInformation();
+		if (info == null)
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("No information selected to edit, did you mean to Add it instead?");
+			return;
+		}
+
+		string name = nameTextBox.Text.Trim();
+		string category = categoryComboBox.Text;
+		string definition = descriptionTextBox.Text;
+		string? structure = GetStructureType();
+		bool nameUnchanged = info.GetName() == name;
+
+		// Validate the input fields
+		if (!ValidateInput(name, structure, category, nameUnchanged))
+			return;
+
+		info.SetName(name);
+		info.SetCategory(category);
+		info.SetDefinition(definition);
+		info.SetStructure(structure!);
+
+		ClearDataPanel();
+		UpdateStructureListView();
+		SetFeedbackStatus($"{name} has been updated.");
+	}
+
 	private void SetFeedbackStatus(string status)
 	{
 		feedbackStatusLabel.Text = $@"Status: {status}";
+	}
+
+	// 6.5 method to check if a name is a duplicate
+	private bool IsValidName(string name)
+	{
+		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
 	}
 }

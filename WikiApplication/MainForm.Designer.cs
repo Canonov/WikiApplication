@@ -353,6 +353,7 @@
 			editButton.Text = "Apply Changes";
 			editButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			editButton.UseVisualStyleBackColor = false;
+			editButton.Click += OnEditEvent;
 			// 
 			// nameLabel
 			// 
@@ -466,6 +467,7 @@
 			deleteItemButton.Text = "Delete";
 			deleteItemButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			deleteItemButton.UseVisualStyleBackColor = false;
+			deleteItemButton.Click += OnDeleteEvent;
 			// 
 			// loadButton
 			// 
@@ -548,6 +550,7 @@
 			addNewButton.TextAlign = ContentAlignment.MiddleRight;
 			addNewButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			addNewButton.UseVisualStyleBackColor = false;
+			addNewButton.Click += OnAddEvent;
 			// 
 			// MainForm
 			// 
