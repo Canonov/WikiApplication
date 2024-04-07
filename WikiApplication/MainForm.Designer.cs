@@ -353,6 +353,7 @@
 			editButton.Text = "Apply Changes";
 			editButton.TextImageRelation = TextImageRelation.ImageBeforeText;
 			editButton.UseVisualStyleBackColor = false;
+			editButton.Click += OnEditEvent;
 			// 
 			// nameLabel
 			// 

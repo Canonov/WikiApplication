@@ -190,6 +190,26 @@ public partial class MainForm : Form
 		SetFeedbackStatus($"{info.GetName()} has been deleted.");
 	}
 
+	// Method to validate the input fields for editing and adding
+	private bool ValidateInput(string name, string? structure, string category, bool editNameUnchanged = false)
+	{
+		if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(structure) ||
+			string.IsNullOrWhiteSpace(category))
+		{
+			MessageBoxUtils.ShowWarning("Invalid input. Please provide a valid Name, Structure, and Category.");
+			return false;
+		}
+
+		if (!IsValidName(name) && !editNameUnchanged)
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("Input already exists in list!");
+			return false;
+		}
+
+		return true;
+	}
+
 	// 6.3 Event to call the add method
 	private void OnAddEvent(object sender, EventArgs e)
 	{
@@ -198,30 +218,49 @@ public partial class MainForm : Form
 		string definition = descriptionTextBox.Text;
 		string? structure = GetStructureType();
 
-		// Check if Name, Structure, and Category are invalid
-		if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(structure) ||
-		    string.IsNullOrWhiteSpace(category))
-		{
-			SystemSounds.Asterisk.Play();
-			SetFeedbackStatus("Invalid input. Please provide a valid Name, Structure, and Category.");
+		// Validate the input fields
+		if (!ValidateInput(name, structure, category))
 			return;
-		}
-
-		if (!IsValidName(name))
-		{
-			SystemSounds.Asterisk.Play();
-			SetFeedbackStatus("Input already exists in list!");
-			return;
-		}
 
 		// Add the new Information to the wiki list
-		wiki.Add(new Information(name, category, structure, definition));
+		wiki.Add(new Information(name, category, structure!, definition));
 
 		// Clear the data panel and update the structure list view
 		ClearDataPanel();
 		UpdateStructureListView();
 
 		SetFeedbackStatus($"{name} has been added.");
+	}
+
+	// 6.8 Event for apply changes button, updates the info in the list
+	private void OnEditEvent(object sender, EventArgs e)
+	{
+		var info = GetSelectedInformation();
+		if (info == null)
+		{
+			SystemSounds.Asterisk.Play();
+			SetFeedbackStatus("No information selected to edit, did you mean to Add it instead?");
+			return;
+		}
+
+		string name = nameTextBox.Text.Trim();
+		string category = categoryComboBox.Text;
+		string definition = descriptionTextBox.Text;
+		string? structure = GetStructureType();
+		bool nameUnchanged = info.GetName() == name;
+
+		// Validate the input fields
+		if (!ValidateInput(name, structure, category, nameUnchanged))
+			return;
+
+		info.SetName(name);
+		info.SetCategory(category);
+		info.SetDefinition(definition);
+		info.SetStructure(structure!);
+
+		ClearDataPanel();
+		UpdateStructureListView();
+		SetFeedbackStatus($"{name} has been updated.");
 	}
 
 	private void SetFeedbackStatus(string status)
