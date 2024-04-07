@@ -4,7 +4,22 @@ namespace WikiApplication;
 
 public partial class MainForm : Form
 {
-	private readonly List<Information> wiki = new List<Information>(); // 6.2
+	private readonly List<Information> wiki = new List<Information>() //TEMPORARY HARD-CODED LIST UNTIL LOADING IS IMPLEMENTED
+	{
+		new Information("Array", "Array", "Linear"),
+		new Information("Two Dimension Array", "Array", "Linear"),
+		new Information("List", "List", "Linear"),
+		new Information("Linked list", "List", "Linear"),
+		new Information("Self-Balance Tree", "Tree", "Non-Linear"),
+		new Information("Heap", "Tree", "Non-Linear"),
+		new Information("Binary Search Tree", "Tree", "Non-Linear"),
+		new Information("Graph", "Graphs", "Non-Linear"),
+		new Information("Set", "Abstract", "Non-Linear"),
+		new Information("Queue", "Abstract", "Linear"),
+		new Information("Stack", "Abstract", "Linear"),
+		new Information("Hash Table", "Hash", "Non-Linear")
+	}; // 6.2
+
 	private List<string> categories = new List<string>();
 
 	public MainForm()
