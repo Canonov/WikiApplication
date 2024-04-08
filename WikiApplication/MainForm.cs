@@ -40,8 +40,8 @@ public partial class MainForm : Form
 		const string CategoriesFileName = "categories.txt";
 		if (!File.Exists(CategoriesFileName))
 		{
-			MessageBoxUtils.ShowFatalError(
-				$"Unable to find {CategoriesFileName} in {Application.ExecutablePath}, ensure it exists and is a line seperated list of categories!");
+			MessageBoxUtils.ShowFatalError($"Unable to find {CategoriesFileName} in {Application.ExecutablePath}," +
+			                               $" ensure it exists and is a line separated list of categories!");
 			Application.Exit();
 		}
 
