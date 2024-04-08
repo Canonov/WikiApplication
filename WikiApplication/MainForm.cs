@@ -40,7 +40,7 @@ public partial class MainForm : Form
 		const string CategoriesFileName = "categories.txt";
 		if (!File.Exists(CategoriesFileName))
 		{
-			MessageBoxUtils.ShowFatalError($"Unable to find {CategoriesFileName} in {Application.ExecutablePath}," +
+			MessageBoxUtils.ShowFatalError($"Unable to find {CategoriesFileName} in {Application.StartupPath}," +
 			                               $" ensure it exists and is a line separated list of categories!");
 			Application.Exit();
 		}
@@ -60,7 +60,7 @@ public partial class MainForm : Form
 		catch (IOException ex)
 		{
 			MessageBoxUtils.ShowFatalError(
-				$"An Unknown IO Exception occured while reading {CategoriesFileName} in {Application.ExecutablePath}\nMore information below:\n{ex}");
+				$"An Unknown IO Exception occured while reading {CategoriesFileName} in {Application.StartupPath}\nMore information below:\n{ex}");
 			Application.Exit();
 		}
 	}
