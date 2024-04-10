@@ -76,4 +76,10 @@ public class Information : IComparable<Information>
 	{
 		return new ListViewItem(GetName()) { SubItems = { GetCategory() } };
 	}
+
+	public override string ToString()
+	{
+		return "Name: " + GetName() + ", Category: " + GetCategory() + ", Structure: " + GetStructure() +
+		       ", Definition: " + GetDefinition();
+	}
 }
