@@ -29,7 +29,7 @@ public class Information : IComparable<Information>
 		name = value;
 	}
 
-	public string? GetCategory()
+	public string GetCategory()
 	{
 		return category;
 	}
