@@ -228,7 +228,7 @@ public partial class MainForm : Form
 	private void OnDeleteEvent(object sender, EventArgs e)
 	{
 		using var trace = new TextWriterTraceListener(File.Open("trace-6.7.log", FileMode.Append));
-		trace.WriteLine($"Entering Method {nameof(OnDeleteEvent)}");
+		trace.WriteLine($"\nEntering Method {nameof(OnDeleteEvent)}");
 		trace.WriteLine($"Event sender: {nameof(sender)} / {sender}");
 		trace.WriteLine($"Eventargs: {nameof(e)} / {e}");
 		trace.IndentLevel++;
@@ -238,7 +238,8 @@ public partial class MainForm : Form
 		
 		if (info == null)
 		{
-			trace.WriteLine($"Info was null\nExiting Method {nameof(OnDeleteEvent)}");
+			trace.WriteLine($"Info was null");
+			trace.WriteLine($"Exiting Method {nameof(OnDeleteEvent)}");
 			SetFeedbackStatus("No selection found to delete", FeedbackLevel.Warning);
 			return;
 		}
@@ -247,7 +248,8 @@ public partial class MainForm : Form
 
 		if (MessageBoxUtils.PromptYesNo($"Are you sure you would like to delete {info.GetName()}?") != DialogResult.Yes)
 		{
-			trace.WriteLine($"User did not enter yes\nExiting Method {nameof(OnDeleteEvent)}");
+			trace.WriteLine($"User did not enter yes");
+			trace.WriteLine($"Exiting Method {nameof(OnDeleteEvent)}");
 			return;
 		}
 		
@@ -309,7 +311,7 @@ public partial class MainForm : Form
 	private void OnEditEvent(object sender, EventArgs e)
 	{
 		using var trace = new TextWriterTraceListener(File.Open("trace-6.8.log", FileMode.Append));
-		trace.WriteLine($"Entering Method {nameof(OnEditEvent)}");
+		trace.WriteLine($"\nEntering Method {nameof(OnEditEvent)}");
 		trace.WriteLine($"Event sender: {nameof(sender)} / {sender}");
 		trace.WriteLine($"Eventargs: {nameof(e)} / {e}");
 		trace.IndentLevel++;
@@ -331,7 +333,11 @@ public partial class MainForm : Form
 		bool nameUnchanged = info.GetName() == name;
 
 		trace.IndentLevel++;
-		trace.WriteLine($"Name: {name}\nCategory: {category}\nDefinition: {definition}\nStructure: {structure}\nNameUnchanged: {nameUnchanged}");
+		trace.WriteLine($"Name: {name}");
+		trace.WriteLine($"Category: {category}");
+		trace.WriteLine($"Definition: {definition}");
+		trace.WriteLine($"Structure: {structure}");
+		trace.WriteLine($"NameUnchanged: {nameUnchanged}");
 		trace.IndentLevel--;
 		
 		// Validate the input fields

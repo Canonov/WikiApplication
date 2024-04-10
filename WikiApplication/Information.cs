@@ -80,6 +80,6 @@ public class Information : IComparable<Information>
 	public override string ToString()
 	{
 		return "Name: " + GetName() + ", Category: " + GetCategory() + ", Structure: " + GetStructure() +
-		       ", Definition: " + GetDefinition();
+		       ", Definition Length: " + GetDefinition().Length;
 	}
 }
