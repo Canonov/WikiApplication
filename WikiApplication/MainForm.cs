@@ -90,7 +90,6 @@ public partial class MainForm : Form
 			if (radioButton.Checked)
 				return radioButton.Text;
 		}
-
 		return null;
 	}
 
@@ -126,7 +125,7 @@ public partial class MainForm : Form
 
 		categoryComboBox.SelectedItem = categoryItem;
 
-		// Select the structure
+		// Find a matching radio button index for the structure type
 		var radioButtons = structureGroupBox.Controls.OfType<RadioButton>().ToList();
 
 		for (int i = 0; i < radioButtons.Count; i++)
