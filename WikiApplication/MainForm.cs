@@ -305,34 +305,57 @@ public partial class MainForm : Form
 		SetFeedbackStatus($"{name} has been added.");
 	}
 
-	// 6.8 Event for apply changes button, updates the info in the list
+// 6.8 Event for apply changes button, updates the info in the list
 	private void OnEditEvent(object sender, EventArgs e)
 	{
+		using var trace = new TextWriterTraceListener(File.Open("trace-6.8.log", FileMode.Append));
+		trace.WriteLine($"Entering Method {nameof(OnEditEvent)}");
+		trace.WriteLine($"Event sender: {nameof(sender)} / {sender}");
+		trace.WriteLine($"Eventargs: {nameof(e)} / {e}");
+		trace.IndentLevel++;
+
+		trace.WriteLine("Getting selected information");
 		var info = GetSelectedInformation();
 		if (info == null)
 		{
+			trace.WriteLine($"Info was null\nExiting Method {nameof(OnEditEvent)}");
 			SetFeedbackStatus("No information selected to edit, did you mean to Add it instead?", FeedbackLevel.Warning);
 			return;
 		}
 
+		trace.WriteLine("Info wasn't null, getting input fields");
 		string name = nameTextBox.Text.Trim();
 		string category = categoryComboBox.Text;
 		string definition = descriptionTextBox.Text;
 		string? structure = GetStructureType();
 		bool nameUnchanged = info.GetName() == name;
 
+		trace.IndentLevel++;
+		trace.WriteLine($"Name: {name}\nCategory: {category}\nDefinition: {definition}\nStructure: {structure}\nNameUnchanged: {nameUnchanged}");
+		trace.IndentLevel--;
+		
 		// Validate the input fields
+		trace.WriteLine("Validating input fields");
 		if (!ValidateInput(name, structure, category, nameUnchanged))
+		{
+			trace.WriteLine($"Input validation failed\nExiting Method {nameof(OnEditEvent)}");
 			return;
+		}
 
+		trace.WriteLine("Input validation passed, updating information");
 		info.SetName(name);
 		info.SetCategory(category);
 		info.SetDefinition(definition);
 		info.SetStructure(structure!);
 
+		trace.WriteLine("Clearing Data Panel..");
 		ClearDataPanel();
+		trace.WriteLine("Updating Listview..");
 		UpdateStructureListView();
+		trace.WriteLine("Setting feedback..");
 		SetFeedbackStatus($"{name} has been updated.");
+
+		trace.WriteLine($"Exiting Method {nameof(OnEditEvent)}");
 	}
 
 	private void OnClearAllEvent(object sender, EventArgs e)
