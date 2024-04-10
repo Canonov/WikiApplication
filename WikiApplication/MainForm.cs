@@ -388,7 +388,17 @@ public partial class MainForm : Form
 	// 6.5 method to check if a name is a duplicate
 	private bool ValidName(string name)
 	{
-		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
+		using var trace = new TextWriterTraceListener(File.Open("trace-6.5.log", FileMode.Append));
+		trace.WriteLine($"Entering Method {nameof(ValidName)}");
+		trace.IndentLevel++;
+		
+		// Original Method
+		bool valid = !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
+		
+		trace.Write($"name: {name}");
+		trace.Write($"is valid: {valid}");
+		trace.WriteLine($"Exiting Method {nameof(ValidName)}");
+		return valid;
 	}
 
 	#endregion
