@@ -305,7 +305,7 @@ public partial class MainForm : Form
 		SetFeedbackStatus($"{name} has been added.");
 	}
 
-// 6.8 Event for apply changes button, updates the info in the list
+	// 6.8 Event for apply changes button, updates the info in the list
 	private void OnEditEvent(object sender, EventArgs e)
 	{
 		using var trace = new TextWriterTraceListener(File.Open("trace-6.8.log", FileMode.Append));
@@ -436,8 +436,8 @@ public partial class MainForm : Form
 		// Original Method
 		bool valid = !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
 		
-		trace.Write($"name: {name}");
-		trace.Write($"is valid: {valid}");
+		trace.WriteLine($"name: {name}");
+		trace.WriteLine($"is valid: {valid}");
 		trace.WriteLine($"Exiting Method {nameof(ValidName)}");
 		return valid;
 	}
