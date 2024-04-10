@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			bottomStatusStrip = new StatusStrip();
 			feedbackStatusLabel = new ToolStripStatusLabel();
@@ -67,6 +68,7 @@
 			saveButton = new FontAwesome.Sharp.IconButton();
 			clearButton = new FontAwesome.Sharp.IconButton();
 			addNewButton = new FontAwesome.Sharp.IconButton();
+			toolTips = new ToolTip(components);
 			bottomStatusStrip.SuspendLayout();
 			topMenuStrip.SuspendLayout();
 			searchPanel.SuspendLayout();
@@ -127,14 +129,14 @@
 			loadToolStripMenuItem.Image = (Image)resources.GetObject("loadToolStripMenuItem.Image");
 			loadToolStripMenuItem.ImageTransparentColor = Color.Magenta;
 			loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-			loadToolStripMenuItem.Size = new Size(180, 22);
+			loadToolStripMenuItem.Size = new Size(154, 22);
 			loadToolStripMenuItem.Text = "Load from file";
 			loadToolStripMenuItem.Click += OnLoadButtonClick;
 			// 
 			// toolStripSeparator
 			// 
 			toolStripSeparator.Name = "toolStripSeparator";
-			toolStripSeparator.Size = new Size(177, 6);
+			toolStripSeparator.Size = new Size(151, 6);
 			// 
 			// saveFileToolStripMenuItem
 			// 
@@ -142,19 +144,19 @@
 			saveFileToolStripMenuItem.ImageTransparentColor = Color.Magenta;
 			saveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
 			saveFileToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-			saveFileToolStripMenuItem.Size = new Size(180, 22);
+			saveFileToolStripMenuItem.Size = new Size(154, 22);
 			saveFileToolStripMenuItem.Text = "&Save";
 			saveFileToolStripMenuItem.Click += OnSaveButtonClick;
 			// 
 			// toolStripSeparator1
 			// 
 			toolStripSeparator1.Name = "toolStripSeparator1";
-			toolStripSeparator1.Size = new Size(177, 6);
+			toolStripSeparator1.Size = new Size(151, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			exitToolStripMenuItem.Size = new Size(180, 22);
+			exitToolStripMenuItem.Size = new Size(154, 22);
 			exitToolStripMenuItem.Text = "E&xit";
 			// 
 			// structuresListView
@@ -204,6 +206,7 @@
 			searchTextBox.PlaceholderText = "Enter a query...";
 			searchTextBox.Size = new Size(283, 46);
 			searchTextBox.TabIndex = 1;
+			toolTips.SetToolTip(searchTextBox, "Enter a search query, press enter to search");
 			searchTextBox.KeyPress += OnSearchTextBoxKeyPress;
 			// 
 			// searchButton
@@ -224,6 +227,7 @@
 			searchButton.TabIndex = 0;
 			searchButton.Text = "Search";
 			searchButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(searchButton, "Perform a search for your query");
 			searchButton.UseVisualStyleBackColor = false;
 			searchButton.Click += OnSearchEvent;
 			// 
@@ -319,6 +323,7 @@
 			categoryLabel.Size = new Size(102, 30);
 			categoryLabel.TabIndex = 11;
 			categoryLabel.Text = "Category";
+			toolTips.SetToolTip(categoryLabel, "Type of Data Structure this item represents");
 			// 
 			// categoryLabelIcon
 			// 
@@ -350,6 +355,7 @@
 			editButton.TabIndex = 3;
 			editButton.Text = "Apply Changes";
 			editButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(editButton, "Apply the changes you have made if you have an item selected.");
 			editButton.UseVisualStyleBackColor = false;
 			editButton.Click += OnEditEvent;
 			// 
@@ -362,6 +368,7 @@
 			nameLabel.Size = new Size(71, 30);
 			nameLabel.TabIndex = 9;
 			nameLabel.Text = "Name";
+			toolTips.SetToolTip(nameLabel, "The name of the data structure you are editing or adding");
 			// 
 			// nameLabelIcon
 			// 
@@ -419,6 +426,7 @@
 			categoryComboBox.Name = "categoryComboBox";
 			categoryComboBox.Size = new Size(184, 45);
 			categoryComboBox.TabIndex = 3;
+			toolTips.SetToolTip(categoryComboBox, "Type of Data Structure this item represents");
 			// 
 			// nameTextBox
 			// 
@@ -430,6 +438,7 @@
 			nameTextBox.PlaceholderText = "Data Structure";
 			nameTextBox.Size = new Size(283, 46);
 			nameTextBox.TabIndex = 2;
+			toolTips.SetToolTip(nameTextBox, "The name of the data structure you are editing or adding\r\nDouble click textbox to clear all fields.");
 			nameTextBox.KeyPress += OnNameTextBoxKeyPress;
 			nameTextBox.MouseDoubleClick += OnClearEvent;
 			// 
@@ -465,6 +474,7 @@
 			deleteItemButton.TabIndex = 7;
 			deleteItemButton.Text = "Delete";
 			deleteItemButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(deleteItemButton, "Delete the selected data structure from the list");
 			deleteItemButton.UseVisualStyleBackColor = false;
 			deleteItemButton.Click += OnDeleteEvent;
 			// 
@@ -486,6 +496,7 @@
 			loadButton.TabIndex = 6;
 			loadButton.Text = "Load";
 			loadButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(loadButton, "Load a file...");
 			loadButton.UseVisualStyleBackColor = false;
 			loadButton.Click += OnLoadButtonClick;
 			// 
@@ -507,6 +518,7 @@
 			saveButton.TabIndex = 5;
 			saveButton.Text = "Save";
 			saveButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(saveButton, "Save list to a file...");
 			saveButton.UseVisualStyleBackColor = false;
 			saveButton.Click += OnSaveButtonClick;
 			// 
@@ -528,6 +540,7 @@
 			clearButton.TabIndex = 4;
 			clearButton.Text = "Clear";
 			clearButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(clearButton, "Clear all fields");
 			clearButton.UseVisualStyleBackColor = false;
 			clearButton.Click += OnClearEvent;
 			// 
@@ -550,6 +563,7 @@
 			addNewButton.Text = "Add";
 			addNewButton.TextAlign = ContentAlignment.MiddleRight;
 			addNewButton.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolTips.SetToolTip(addNewButton, "Add a new data structure to the list");
 			addNewButton.UseVisualStyleBackColor = false;
 			addNewButton.Click += OnAddEvent;
 			// 
@@ -630,5 +644,6 @@
 		private Label categoryLabel;
 		private FontAwesome.Sharp.IconPictureBox categoryLabelIcon;
 		private GroupBox structureGroupBox;
+		private ToolTip toolTips;
 	}
 }
