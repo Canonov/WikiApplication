@@ -1,54 +1,54 @@
+using System.Diagnostics;
 using System.Media;
+using Microsoft.VisualBasic.Logging;
 
 namespace WikiApplication;
 
 public partial class MainForm : Form
 {
-	private readonly List<Information> wiki = new List<Information>() //TEMPORARY HARD-CODED LIST UNTIL LOADING IS IMPLEMENTED
-	{
-		new Information("Array", "Array", "Linear"),
-		new Information("Two Dimension Array", "Array", "Linear"),
-		new Information("List", "List", "Linear"),
-		new Information("Linked list", "List", "Linear"),
-		new Information("Self-Balance Tree", "Tree", "Non-Linear"),
-		new Information("Heap", "Tree", "Non-Linear"),
-		new Information("Binary Search Tree", "Tree", "Non-Linear"),
-		new Information("Graph", "Graphs", "Non-Linear"),
-		new Information("Set", "Abstract", "Non-Linear"),
-		new Information("Queue", "Abstract", "Linear"),
-		new Information("Stack", "Abstract", "Linear"),
-		new Information("Hash Table", "Hash", "Non-Linear")
-	}; // 6.2
+	private readonly List<Information> wiki = new List<Information>(); // 6.2
 
 	private List<string> categories = new List<string>();
+	private InformationSaveManager saveManager; // Handles saving and loading, 6.14
 
 	public MainForm()
 	{
 		InitializeComponent();
+		saveManager = new InformationSaveManager(wiki);
 	}
 
 	private void OnFormLoad(object sender, EventArgs e)
 	{
 		InitializeCategories(); // 6.4
 		UpdateStructureListView();
+		this.FormClosing += AutosaveOnFormClosing;
 		SetFeedbackStatus("Ok!");
 	}
+	
+	// Only allow regular characters.
+	private void OnNameTextBoxKeyPress(object sender, KeyPressEventArgs e)
+	{
+		if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+			e.Handled = true;
+	}
+
+	#region Form Management
 
 	// 6.4 - Populates the combobox and categories list
 	private void InitializeCategories()
 	{
-		const string CategoriesFileName = "categories.txt";
-		if (!File.Exists(CategoriesFileName))
+		const string categoriesFileName = "categories.txt";
+		if (!File.Exists(categoriesFileName))
 		{
-			MessageBoxUtils.ShowFatalError($"Unable to find {CategoriesFileName} in {Application.StartupPath}," +
-			                               $" ensure it exists and is a line separated list of categories!");
+			MessageBoxUtils.ShowFatalError($"Unable to find {categoriesFileName} in {Application.StartupPath}," +
+										   $" ensure it exists and is a line separated list of categories!");
 			Application.Exit();
 		}
 
 		// Read from the file and sanitize it.
 		try
 		{
-			var fileLines = File.ReadAllLines(CategoriesFileName)
+			var fileLines = File.ReadAllLines(categoriesFileName)
 				.Select(line => line.Trim())
 				.Where(line => !string.IsNullOrWhiteSpace(line))
 				.Distinct()
@@ -60,7 +60,7 @@ public partial class MainForm : Form
 		catch (IOException ex)
 		{
 			MessageBoxUtils.ShowFatalError(
-				$"An Unknown IO Exception occured while reading {CategoriesFileName} in {Application.StartupPath}\nMore information below:\n{ex}");
+				$"An Unknown IO Exception occured while reading {categoriesFileName} in {Application.StartupPath}\nMore information below:\n{ex}");
 			Application.Exit();
 		}
 	}
@@ -151,15 +151,59 @@ public partial class MainForm : Form
 		descriptionTextBox.Clear();
 
 		// Clear selected structure
-		bool hasSetOne = false;
 		foreach (var radioButton in structureGroupBox.Controls.OfType<RadioButton>())
-		{
-			radioButton.Checked = !hasSetOne;
-			hasSetOne = true;
-		}
+			radioButton.Checked = false;
+		SetStructureType(0);
 
 		categoryComboBox.SelectedIndex = 0; // Set category to first
 	}
+
+	#endregion
+
+	#region Saving & Loading
+	
+	// On form closing, save the file - 6.15
+	private void AutosaveOnFormClosing(object? sender, FormClosingEventArgs e)
+	{
+		Trace.Listeners.Add(new FileLogTraceListener("WikiApplication.autosave.log"));
+		var result = saveManager.SaveFile(skipPrompt: true);
+		
+		if (!result.Success)
+			MessageBoxUtils.ShowFatalError("An error occurred while saving the file, please check the logs for more information!");
+	}
+
+	// Save button click event - 6.14 
+	private void OnSaveButtonClick(object sender, EventArgs e)
+	{
+		var result = saveManager.SaveFile();
+		
+		if (result.Success)
+			SetFeedbackStatus("File saved successfully");
+		else
+			SetFeedbackStatus(result.Message, FeedbackLevel.Error);
+	}
+
+	// Load button click event - 6.14 
+	private void OnLoadButtonClick(object sender, EventArgs e)
+	{
+		const string warnMsg = "Are you sure you'd like to load a new file?, this will overwrite all current data!";
+		if (wiki.Count > 0 && MessageBoxUtils.PromptYesNo(warnMsg) != DialogResult.Yes)
+			return;
+		
+		var result = saveManager.LoadFile();
+		
+		UpdateStructureListView();
+		
+		if (result.Success)
+			SetFeedbackStatus("File loaded successfully");
+		else
+			SetFeedbackStatus(result.Message, FeedbackLevel.Error);
+	}
+
+	#endregion
+
+	#region Add-Edit-Delete / Wiki Management
+
 
 	// 6.11 When the selected item is changed, update the textboxes 
 	private void OnWikiItemSelectionChanged(object sender, EventArgs e)
@@ -213,7 +257,7 @@ public partial class MainForm : Form
 			return false;
 		}
 
-		if (!IsValidName(name) && !editNameUnchanged)
+		if (!ValidName(name) && !editNameUnchanged)
 		{
 			SetFeedbackStatus("Input already exists in list!", FeedbackLevel.Warning);
 			return false;
@@ -284,6 +328,10 @@ public partial class MainForm : Form
 		SetFeedbackStatus("List Cleared");
 	}
 
+	#endregion
+
+	#region Searching
+
 	// 6.10 Event to perform a binary search for the data structure name
 	private void OnSearchEvent(object sender, EventArgs e)
 	{
@@ -327,24 +375,22 @@ public partial class MainForm : Form
 		}
 	}
 
-	// Only allow regular characters.
-	private void OnNameTextBoxKeyPress(object sender, KeyPressEventArgs e)
-	{
-		if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
-			e.Handled = true;
-	}
+	#endregion
 
-	private void SetFeedbackStatus(string status, FeedbackLevel level = FeedbackLevel.Notice)
+	#region Utility
+
+	private void SetFeedbackStatus(string? status, FeedbackLevel level = FeedbackLevel.Notice)
 	{
 		level.GetSound()?.Play();
 		feedbackStatusLabel.ForeColor = level.GetColor();
-		feedbackStatusLabel.Text = $@"Status: {status}";
+		feedbackStatusLabel.Text = $@"Status: {status ?? "Unknown Error"}";
 	}
 
 	// 6.5 method to check if a name is a duplicate
-	private bool IsValidName(string name)
+	private bool ValidName(string name)
 	{
 		return !wiki.Exists(info => info.GetName().Equals(name, StringComparison.OrdinalIgnoreCase));
 	}
 
+	#endregion
 }
