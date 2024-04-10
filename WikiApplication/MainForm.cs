@@ -227,23 +227,41 @@ public partial class MainForm : Form
 	// 6.7 Event to delete the currently selected item.
 	private void OnDeleteEvent(object sender, EventArgs e)
 	{
+		using var trace = new TextWriterTraceListener(File.Open("trace-6.7.log", FileMode.Append));
+		trace.WriteLine($"Entering Method {nameof(OnDeleteEvent)}");
+		trace.WriteLine($"Event sender: {nameof(sender)} / {sender}");
+		trace.WriteLine($"Eventargs: {nameof(e)} / {e}");
+		trace.IndentLevel++;
+		
+		trace.WriteLine("Getting selected information");
 		var info = GetSelectedInformation();
+		
 		if (info == null)
 		{
+			trace.WriteLine($"Info was null\nExiting Method {nameof(OnDeleteEvent)}");
 			SetFeedbackStatus("No selection found to delete", FeedbackLevel.Warning);
 			return;
 		}
+		trace.WriteLine("Info wasn't null, prompting user for confirmation");
+		trace.WriteLine(info);
 
 		if (MessageBoxUtils.PromptYesNo($"Are you sure you would like to delete {info.GetName()}?") != DialogResult.Yes)
 		{
+			trace.WriteLine($"User did not enter yes\nExiting Method {nameof(OnDeleteEvent)}");
 			return;
 		}
-
+		
+		trace.WriteLine($"User confirmed, removing {info.GetName()} from the wiki list");
 		wiki.Remove(info);
 
+		trace.WriteLine("Clearing Data Panel..");
 		ClearDataPanel();
+		trace.WriteLine("Updating Listview..");
 		UpdateStructureListView(skipSort: true);
+		trace.WriteLine("Setting feedback..");
 		SetFeedbackStatus($"{info.GetName()} has been deleted.");
+		
+		trace.WriteLine($"Exiting Method {nameof(OnDeleteEvent)}");
 	}
 
 	// Method to validate the input fields for editing and adding
