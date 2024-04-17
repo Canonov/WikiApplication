@@ -584,6 +584,7 @@
 			MainMenuStrip = topMenuStrip;
 			Name = "MainForm";
 			Text = "Data Structure Wiki";
+			FormClosing += OnFormClosingAutosave;
 			Load += OnFormLoad;
 			bottomStatusStrip.ResumeLayout(false);
 			bottomStatusStrip.PerformLayout();
