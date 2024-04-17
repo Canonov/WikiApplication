@@ -48,13 +48,12 @@ public partial class MainForm : Form
 		// Read from the file and sanitize it.
 		try
 		{
-			var fileLines = File.ReadAllLines(categoriesFileName)
+			categories = File.ReadAllLines(categoriesFileName)
 				.Select(line => line.Trim())
 				.Where(line => !string.IsNullOrWhiteSpace(line))
-				.Distinct()
-				.Order();
+				.Order()
+				.ToList();
 
-			categories = fileLines.ToList();
 			categoryComboBox.DataSource = categories;
 		}
 		catch (IOException ex)
@@ -76,9 +75,9 @@ public partial class MainForm : Form
 			wiki.Sort();
 
 		// Get a sorted array of ListViewItems from the Wiki List
-		var wikiItems = wiki.Select(x => x.ToListViewItem()).ToArray(); // Convert each to a ListViewItem
+		var wikiItems = wiki.Select(x => x.ToListViewItem()); // Convert each to a ListViewItem
 
-		structuresListView.Items.AddRange(wikiItems);
+		structuresListView.Items.AddRange(wikiItems.ToArray());
 		structuresListView.Refresh();
 	}
 
