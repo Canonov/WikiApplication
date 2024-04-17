@@ -3,6 +3,14 @@ using System.Text;
 
 namespace WikiApplication;
 
+/*
+ * Updated on 2024/04/17
+ * Programmer: 30048254
+ * Name: SaveManager.cs
+ * Handles saving and loading of the information class to and from a binary file format. (.DAT)
+ * Copyright (c) 2024 - CITEMS
+ */
+
 public class SaveManager
 {
     public readonly record struct Result(bool Success, string? Message = null, Exception? Exception = null);

@@ -4,6 +4,18 @@ using Microsoft.VisualBasic.Logging;
 
 namespace WikiApplication;
 
+/*
+ * Updated on 2024/04/17
+ * Programmer: 30048254
+ * Name: MainForm.cs - Wiki Application
+ * Form for saving, displaying, and editing information on data structures.
+ * Copyright (c) 2024 - CITEMS
+ *
+ * See SaveManager.cs for save related methods
+ * See FeedbackLevel.cs and MessageBoxUtils.cs for helper methods for displaying feedback to the user
+ * See Information.cs for the main Data Structure of this application.
+*/
+
 public partial class MainForm : Form
 {
 	private readonly List<Information> wiki = new List<Information>(); // 6.2

@@ -1,5 +1,12 @@
 ﻿namespace WikiApplication;
 
+/*
+ * Updated on 2024/04/17
+ * Programmer: 30048254
+ * Name: Information.cs
+ * Copyright (c) 2024 - CITEMS
+ */
+
 /// <summary>
 /// Represents a piece of information for a data structure in the wiki application. - 6.1
 /// Implements the IComparable interface to allow for comparison between different Information objects for sorting.
