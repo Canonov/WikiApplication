@@ -7,21 +7,20 @@ namespace WikiApplication;
 public partial class MainForm : Form
 {
 	private readonly List<Information> wiki = new List<Information>(); // 6.2
+	private readonly SaveManager saveManager; // Handles saving and loading, 6.14
 
 	private List<string> categories = new List<string>();
-	private InformationSaveManager saveManager; // Handles saving and loading, 6.14
 
 	public MainForm()
 	{
 		InitializeComponent();
-		saveManager = new InformationSaveManager(wiki);
+		saveManager = new SaveManager(wiki);
 	}
 
 	private void OnFormLoad(object sender, EventArgs e)
 	{
 		InitializeCategories(); // 6.4
 		UpdateStructureListView();
-		this.FormClosing += AutosaveOnFormClosing;
 		SetFeedbackStatus("Ok!");
 	}
 	
@@ -161,7 +160,7 @@ public partial class MainForm : Form
 	#region Saving & Loading
 	
 	// On form closing, save the file - 6.15
-	private void AutosaveOnFormClosing(object? sender, FormClosingEventArgs e)
+	private void OnFormClosingAutosave(object? sender, FormClosingEventArgs e)
 	{
 		Trace.Listeners.Add(new FileLogTraceListener("WikiApplication.autosave.log"));
 		var result = saveManager.SaveFile(skipPrompt: true);
