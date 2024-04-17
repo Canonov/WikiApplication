@@ -3,7 +3,7 @@ using System.Text;
 
 namespace WikiApplication;
 
-public class InformationSaveManager
+public class SaveManager
 {
     public readonly record struct Result(bool Success, string? Message = null, Exception? Exception = null);
 
@@ -13,7 +13,7 @@ public class InformationSaveManager
     private const string DefaultFileName = "definitions.dat";
     private const string FileTypeFilter = "data files (*.dat)|*.dat|All files (*.*)|*.*";
 
-    public InformationSaveManager(List<Information> wiki)
+    public SaveManager(List<Information> wiki)
     {
         this.wiki = wiki;
     }
